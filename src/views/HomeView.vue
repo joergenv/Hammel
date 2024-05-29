@@ -1,18 +1,18 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+<h2>Velkommen</h2>
+<!--
+<v-row>
+    <v-col cols="12" sm="3" md="4" v-for="(tractor, id) in $store.state.tractors" :key="id" >
+        <v-card :title="tractor.model" :subtitle="tractor.manufacturer" ></v-card>
+    </v-col>
+</v-row>
+-->
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+<script setup>
+import { defineComponent, ref, onMounted } from 'vue';
 
-export default {
-  name: 'HomeView',
-  components: {
-    HelloWorld
-  }
-}
+// Components
+//import HelloWorld from '../components/HelloWorld.vue';
+
 </script>
