@@ -6,56 +6,44 @@
       <h2>Producenter</h2>
     </v-col>
     <v-col cols="auto" v-align="right">
-      <v-btn density="comfortable" icon="mdi-plus" @click="dialog=true"></v-btn>
+      <v-btn density="comfortable" icon="mdi-plus" @click="addItem()"></v-btn>
     </v-col>
   </v-row>
-  <v-dialog
-      v-model="dialog"
-      width="auto"
-    >
-      <v-card
-        width="800"
-        prepend-icon="mdi-update"
-        text="Inddtast oplysninger om fabrikant."
-        title="Update in progress"
-        class="pa-5"
-      >
- 
-      <v-text-field label="Mærke" variant="outlined" v-model="fornavn"></v-text-field>
-      <v-text-field label="Grundlagt" variant="outlined" v-model="fornavn"></v-text-field>
-      <v-text-field label="Land" variant="outlined" v-model="fornavn"></v-text-field>
-
-      
-        <template v-slot:actions>
-          <v-btn
-            class="ms-auto"
-            text="Ok"
-            @click="dialog = false"
-          ></v-btn>
-
-        </template>
-      </v-card>
-    </v-dialog>
 </v-container>
-
+ <manufacturer-dialog v-model="dialog" :item="manufacturer"></manufacturer-dialog>
 
   <v-data-table :items="$store.state.manufacturers"></v-data-table>
 </div>
 </template>
   
 <script>
+import ManufacturerDialog from '../components/ManufacturerDialog'
 import {onMounted} from "vue"
 import {useStore} from 'vuex'
 
 export default {
+  components : {
+    ManufacturerDialog
+  },  
   data() {
     return {
-      dialog: null,
-      fornavn: 'Jørgen Vig Jensen'
+      dialog: false,
+      manufacturer: {
+            name: 'Fergusson',
+            establishedyear: 1920,
+            country: 'ENG'
+        }      
     }
   },
   methods: {
-  
+    addItem: function(){
+      this.dialog = true;
+      this.manufacturer = Object.assign({}, {
+        name: 'Ferguson',
+        establishedyear: 1935,
+        country: 'UK'
+      })
+    }
   },
   setup() {    
     onMounted(() => {
