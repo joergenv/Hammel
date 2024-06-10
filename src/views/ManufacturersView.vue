@@ -6,13 +6,18 @@
       <h2>Producenter</h2>
     </v-col>
     <v-col cols="auto" v-align="right">
-      <v-btn density="comfortable" icon="mdi-plus" @click="addItem()"></v-btn>
+      <v-btn density="comfortable" icon="mdi-plus" @click.stop="addItem(item)"></v-btn>
     </v-col>
   </v-row>
 </v-container>
- <manufacturer-dialog v-model="dialog" :item="manufacturer"></manufacturer-dialog>
+ <manufacturer-dialog :dialog="doShowDialog" :item="manufacturer"></manufacturer-dialog>
 
-  <v-data-table :items="$store.state.manufacturers"></v-data-table>
+  <v-data-table :items="$store.state.manufacturers" :headers="headers">
+    <template v-slot:item.row-icon="{item}">
+      <v-icon color="primary" icon="mdi-pencil" @click.stop="editItem(item)"></v-icon>
+    </template>
+  </v-data-table>
+  
 </div>
 </template>
   
@@ -27,22 +32,28 @@ export default {
   },  
   data() {
     return {
-      dialog: false,
-      manufacturer: {
-            name: 'Fergusson',
-            establishedyear: 1920,
-            country: 'ENG'
-        }      
+      doShowDialog: false,
+      manufacturer: {},
+      headers: [
+        {key: 'name', title:'Navn'},
+        {key: 'establishyear', title:'Etableret'},
+        {key: 'country', title:'Land'},
+        {key: 'row-icon', title:'ikon'} ]      
     }
   },
   methods: {
     addItem: function(){
-      this.dialog = true;
       this.manufacturer = Object.assign({}, {
         name: 'Ferguson',
         establishedyear: 1935,
         country: 'UK'
-      })
+      });
+      this.doShowDialog = true;
+    },
+    editItem(item){
+      //debugger;
+      this.manufacturer = Object.assign({},item);
+      this.doShowDialog = true;
     }
   },
   setup() {    
